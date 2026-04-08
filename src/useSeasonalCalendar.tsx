@@ -74,6 +74,7 @@ export const SeasonalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     // 2. Identify Season
     const season = getCurrentMicroSeason(today);
     setCurrentSeason(season);
+    document.title = `${season.ritu} | WeNoteHere`;
 
     // 3. Get Asset and Transition state
     setIsTransitioning(getTransitionState(today));
