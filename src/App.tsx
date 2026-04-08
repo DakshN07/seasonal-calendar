@@ -80,7 +80,7 @@ const LiquidMeshBackground = ({ color, atmosphere, isGrishma, motionX, motionY }
   );
 };
 
-const MonthGrid = ({ todayDate, selectedDateStr, onSelectDate, themeColors, allNotes }: any) => {
+const MonthGrid = ({ todayDate, startDateStr, endDateStr, onSelectDate, themeColors, allNotes }: any) => {
   const year = todayDate.getFullYear();
   const month = todayDate.getMonth();
   
@@ -113,26 +113,44 @@ const MonthGrid = ({ todayDate, selectedDateStr, onSelectDate, themeColors, allN
           
           const dateStr = `${year}-${pad(month+1)}-${pad(dayNum)}`;
           const isToday = dateStr === todayStr;
-          const isSelected = dateStr === selectedDateStr;
+          const isSelectedStart = dateStr === startDateStr;
+          const isSelectedEnd = dateStr === endDateStr;
+          let isInRange = false;
+          if (startDateStr && endDateStr) {
+            const start = new Date(startDateStr);
+            const end = new Date(endDateStr);
+            const current = new Date(dateStr);
+            if (current > start && current < end) {
+              isInRange = true;
+            }
+          }
+          const isSelected = isSelectedStart || isSelectedEnd || isInRange;
           const hasNotes = allNotes[dateStr] && allNotes[dateStr].length > 0;
           
           return (
             <motion.button 
               key={dateStr}
               onClick={() => onSelectDate(dateStr)}
-              whileHover={{ scale: 1.15, rotate: isSelected ? 0 : [0, -5, 5, 0] }}
+              whileHover={{ scale: 1.15, rotate: isSelectedStart || isSelectedEnd ? 0 : [0, -5, 5, 0] }}
               whileTap={{ scale: 0.9 }}
               className={`relative flex items-center justify-center w-10 h-10 rounded-full mx-auto transition-colors duration-300 ${isSelected ? 'text-white' : 'text-stone-300 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]'} ${isToday && !isSelected ? 'text-white font-black' : ''}`}
             >
               <span className="relative z-10">{dayNum}</span>
               
               <AnimatePresence>
-                {isSelected && (
+                {(isSelectedStart || isSelectedEnd) && (
                   <motion.div 
-                    layoutId="selectedDayIndicator" 
+                    layoutId={`selectedDayIndicator-${isSelectedStart ? 'start' : 'end'}`} 
                     className="absolute inset-0 rounded-full z-0 shadow-[0_0_20px_rgba(0,0,0,0.5)]" 
                     style={{ backgroundColor: themeColors.primary }} 
                     transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.8 }} 
+                  />
+                )}
+                {isInRange && (
+                  <motion.div 
+                    initial={{ opacity: 0 }} animate={{ opacity: 0.4 }} exit={{ opacity: 0 }}
+                    className="absolute inset-0 rounded-full z-0" 
+                    style={{ backgroundColor: themeColors.primary }} 
                   />
                 )}
               </AnimatePresence>
@@ -162,28 +180,38 @@ const MonthGrid = ({ todayDate, selectedDateStr, onSelectDate, themeColors, allN
   );
 };
 
-const ActiveDayEditor = ({ selectedDateStr, todayStr, allNotes, addNote, updateNote, themeColors, isGrishma, isShishir }: any) => {
-  const notes = allNotes[selectedDateStr] || [];
+const ActiveDayEditor = ({ selectedKey, todayStr, allNotes, addNote, updateNote, themeColors, isGrishma, isShishir }: any) => {
+  const notes = allNotes[selectedKey] || [];
   const [newNote, setNewNote] = useState('');
   const [isSaved, setIsSaved] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
 
   // Safely parse date for header
-  const [y, m, d] = selectedDateStr.split('-').map(Number);
-  const dateObj = new Date(y, m - 1, d);
-  const formattedDate = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-  const isToday = selectedDateStr === todayStr;
+  let formattedDate = "";
+  if (selectedKey.includes('_')) {
+    const [startStr, endStr] = selectedKey.split('_');
+    const [sy, sm, sd] = startStr.split('-').map(Number);
+    const [ey, em, ed] = endStr.split('-').map(Number);
+    const d1 = new Date(sy, sm - 1, sd);
+    const d2 = new Date(ey, em - 1, ed);
+    formattedDate = `${d1.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${d2.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+  } else {
+    const [y, m, d] = selectedKey.split('-').map(Number);
+    const dateObj = new Date(y, m - 1, d);
+    formattedDate = dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  }
+  const isToday = selectedKey === todayStr;
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && newNote.trim()) {
-      addNote(selectedDateStr, newNote);
+      addNote(selectedKey, newNote);
       setNewNote('');
       triggerSave();
     }
   };
 
   const handleUpdate = (idx: number, val: string) => {
-    updateNote(selectedDateStr, idx, val);
+    updateNote(selectedKey, idx, val);
     triggerSave();
   };
 
@@ -213,7 +241,7 @@ const ActiveDayEditor = ({ selectedDateStr, todayStr, allNotes, addNote, updateN
 
   return (
     <motion.div 
-      key={selectedDateStr} // Force remount for crossfade
+      key={selectedKey} // Force remount for crossfade
       initial={{ opacity: 0, x: -15, filter: 'blur(5px)' }}
       animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
       exit={{ opacity: 0, x: 15, filter: 'blur(5px)' }}
@@ -253,7 +281,7 @@ const ActiveDayEditor = ({ selectedDateStr, todayStr, allNotes, addNote, updateN
               variants={itemVariant as any}
               layout
               exit={{ opacity: 0, scale: 0.8, filter: "blur(4px)" }}
-              key={`${selectedDateStr}-${idx}`} 
+              key={`${selectedKey}-${idx}`} 
               whileHover={{ scale: 1.02, y: -2 }}
               className="group flex items-start bg-black/40 p-5 rounded-2xl border border-white/5 hover:border-t-white/10 hover:border-l-white/10 hover:shadow-[0_10px_30px_var(--primary-seasonal-alpha)] transition-all duration-300 backdrop-blur-md"
             >
@@ -306,8 +334,29 @@ const SeasonalCalendarUI = () => {
   const pad = (n: number) => String(n).padStart(2, '0');
   const todayStr = `${todayDate.getFullYear()}-${pad(todayDate.getMonth()+1)}-${pad(todayDate.getDate())}`;
 
-  // State to hold the actively selected date for the Left Pane
-  const [selectedDateStr, setSelectedDateStr] = useState<string>(todayStr);
+  // State to hold the actively selected date(s) for the Left Pane
+  const [startDateStr, setStartDateStr] = useState<string | null>(todayStr);
+  const [endDateStr, setEndDateStr] = useState<string | null>(null);
+
+  const handleSelectDate = (dateStr: string) => {
+    if (!startDateStr || (startDateStr && endDateStr)) {
+      setStartDateStr(dateStr);
+      setEndDateStr(null);
+    } else {
+      const start = new Date(startDateStr);
+      const clicked = new Date(dateStr);
+      if (clicked < start) {
+        setStartDateStr(dateStr);
+        setEndDateStr(null);
+      } else if (clicked.getTime() === start.getTime()) {
+        setEndDateStr(null);
+      } else {
+        setEndDateStr(dateStr);
+      }
+    }
+  };
+
+  const selectedKey = (startDateStr && endDateStr) ? `${startDateStr}_${endDateStr}` : (startDateStr || todayStr);
 
   const formattedFullDate = todayDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
   const dayNum = todayDate.getDate();
@@ -404,7 +453,7 @@ const SeasonalCalendarUI = () => {
           {/* Left Pane: Detail View */}
           <div className="order-2 lg:order-1 h-full min-h-0">
              <ActiveDayEditor 
-               selectedDateStr={selectedDateStr}
+               selectedKey={selectedKey}
                todayStr={todayStr}
                allNotes={allNotes}
                addNote={addNote}
@@ -419,8 +468,9 @@ const SeasonalCalendarUI = () => {
           <div className="order-1 lg:order-2">
              <MonthGrid 
                todayDate={todayDate}
-               selectedDateStr={selectedDateStr}
-               onSelectDate={setSelectedDateStr}
+               startDateStr={startDateStr}
+               endDateStr={endDateStr}
+               onSelectDate={handleSelectDate}
                themeColors={themeColors}
                allNotes={allNotes}
              />
