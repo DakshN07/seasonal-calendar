@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vasant | Digital Sanctuary</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "surface-container": "#eceeec",
+                    "tertiary-fixed": "#ffd9dd",
+                    "on-background": "#191c1b",
+                    "tertiary-fixed-dim": "#ffb2bd",
+                    "on-tertiary-fixed-variant": "#762f3d",
+                    "secondary-container": "#d3e6c4",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#245025",
+                    "surface-dim": "#d8dad9",
+                    "on-surface": "#191c1b",
+                    "on-secondary-fixed-variant": "#3b4b32",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#baccac",
+                    "outline": "#737970",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#3e0314",
+                    "on-primary-fixed": "#002204",
+                    "surface-container-low": "#f2f4f2",
+                    "on-secondary-fixed": "#111f0a",
+                    "inverse-on-surface": "#eff1ef",
+                    "outline-variant": "#c2c8be",
+                    "inverse-primary": "#a1d39b",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#e6e9e7",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2e3130",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#57674c",
+                    "on-surface-variant": "#424841",
+                    "primary-fixed": "#bcf0b6",
+                    "surface-variant": "#e1e3e1",
+                    "on-primary-container": "#1a471d",
+                    "surface-tint": "#3b683b",
+                    "primary": "#3b683b",
+                    "primary-fixed-dim": "#a1d39b",
+                    "background": "#f8faf8",
+                    "surface-container-highest": "#e1e3e1",
+                    "secondary-fixed": "#d5e8c6",
+                    "tertiary-container": "#ec8e9d",
+                    "primary-container": "#85b580",
+                    "surface-bright": "#f8faf8",
+                    "surface": "#f8faf8",
+                    "secondary": "#536348",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#934654",
+                    "on-tertiary-container": "#6b2635"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        :root {
+            --bg-blur: blur(16px);
+            --ghost-border: rgba(194, 200, 190, 0.2);
+            --primary-seasonal: #3b683b;
+            --accent-seasonal: #ec8e9d;
+        }
+        .noto-serif { font-family: 'Noto Serif', serif; }
+        .manrope { font-family: 'Manrope', sans-serif; }
+        
+        .mask-wave {
+            clip-path: url(#wave-clip);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: var(--bg-blur);
+            border-top: 0.5px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-background manrope overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-white/60 dark:bg-stone-900/60 backdrop-blur-xl">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-serif text-emerald-900 dark:text-emerald-50">Vasant</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-emerald-700 dark:text-emerald-400 font-bold manrope tracking-widest uppercase text-xs hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors" href="#">Daily View</a>
+<a class="text-stone-500 dark:text-stone-400 manrope tracking-widest uppercase text-xs hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors" href="#">Reflection</a>
+<a class="text-stone-500 dark:text-stone-400 manrope tracking-widest uppercase text-xs hover:text-emerald-600 dark:hover:text-emerald-300 transition-colors" href="#">Journey</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-emerald-900 dark:text-emerald-50 hover:scale-95 duration-200" data-icon="calendar_month">calendar_month</button>
+<button class="material-symbols-outlined text-emerald-900 dark:text-emerald-50 hover:scale-95 duration-200" data-icon="search">search</button>
+<button class="material-symbols-outlined text-emerald-900 dark:text-emerald-50 hover:scale-95 duration-200" data-icon="settings">settings</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img alt="User profile" data-alt="Close-up professional headshot of a serene person with soft natural lighting and a minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMhJXtxZ4Q5lABGyjwKuP3huqKsywNIG4duH85a4I0iFuRC5uu-F2gvnD2goUGXWUyg5vbhykZkcIzJuzp4q3s_3J1VjZCa5Uw3mR-ZSxlbnplB_rjLj1KCEOk8U_qxb4Oit9ONDrZSX-lyorMuf_HDVczVqgf9OZ3p0pFjGtMS0Kx1zU6UaqPSLTYVwty3C-23d1qArtkhe5haNRhs-ChMcB66gtVeu03zMXQbcRQ7s8DUNrJoqLw0aRakvEcT4Hpu4mRVPhzKzg"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Hidden on Mobile) -->
+<aside class="fixed left-0 top-0 h-full flex-col p-6 bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-lg h-screen w-72 rounded-r-3xl shadow-2xl shadow-emerald-900/5 hidden lg:flex z-40 pt-24">
+<div class="mb-10 px-4">
+<h2 class="font-serif text-xl italic text-emerald-900 dark:text-emerald-50">Vasant 2026</h2>
+<p class="text-stone-500 text-sm manrope">The Digital Sanctuary</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 p-3 bg-emerald-100/50 dark:bg-emerald-900/30 text-emerald-900 dark:text-emerald-50 font-medium rounded-xl transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="today">today</span>
+<span>Daily View</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-300 ease-in-out rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="self_improvement">self_improvement</span>
+<span>Reflection</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-300 ease-in-out rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="eco">eco</span>
+<span>Seasonal Rhythm</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-300 ease-in-out rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span>Archive</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-300 ease-in-out rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+<span>Settings</span>
+</a>
+</nav>
+<button class="mt-auto bg-gradient-to-br from-emerald-700 to-emerald-500 text-white rounded-xl py-3 px-6 font-medium shadow-lg hover:scale-95 transition-transform">
+            New Entry
+        </button>
+</aside>
+<!-- Main Content Area (60/40 Split) -->
+<main class="lg:ml-72 h-screen flex flex-col">
+<!-- Top Section (60%) -->
+<section class="relative h-[614px] w-full overflow-hidden mask-wave">
+<!-- Simulated Video Background (Image as fallback) -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" data-alt="Wide angle cinematic view of a misty green mountain valley at dawn with ethereal soft sunlight and rolling clouds" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD-2Nzp6vYE6FnP7W69hjEjX1OvycOAH_BBt5OI6kwF8kTgj_qT8pFpgGwsszC58tgK4Bi1ergLvLs9c_VI4T-YY0u6zIAMBhpeY4obNivJBbyQvf1jUjn2nl2QJkiaRwMIkBMdrmr5hstHrwGX7MEnAc8aQKor5iMuGITjnObafXhhchA0u13nIey55Zmtj8yUT5Pribjqgqmz2H6gwMbSrVULm6-eS9ErFOBq9V9XBt6zF5Nw7FMLwjYp1yiXIS7GjtmqBgw43U"/>
+<!-- Overlay for depth -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+</div>
+<!-- Content Overlay -->
+<div class="relative z-10 h-full flex flex-col items-center justify-center text-center p-8">
+<h1 class="noto-serif text-7xl md:text-9xl text-white drop-shadow-2xl opacity-90 tracking-tighter">Vasant 2026</h1>
+<p class="manrope text-white/80 uppercase tracking-[0.3em] text-sm mt-4">Restoration &amp; Renewal</p>
+<!-- Floating Calendar Highlight Card -->
+<div class="absolute bottom-16 right-8 md:right-16 glass-panel rounded-2xl p-6 max-w-xs shadow-xl flex items-center gap-4">
+<div class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-xl w-14 h-14">
+<span class="text-xs uppercase manrope font-bold">Mar</span>
+<span class="text-xl font-serif">14</span>
+</div>
+<div>
+<h3 class="font-serif text-lg text-emerald-900">Vernal Equinox</h3>
+<p class="text-stone-500 text-xs manrope">Balance of light and dark.</p>
+</div>
+</div>
+</div>
+<!-- Wave Clip Path Definition -->
+<svg class="absolute" height="0" width="0">
+<defs>
+<clippath clippathunits="objectBoundingBox" id="wave-clip">
+<path d="M0,0 L1,0 L1,0.85 C0.8,0.95 0.7,0.75 0.5,0.85 C0.3,0.95 0.2,0.8 0,0.9 Z"></path>
+</clippath>
+</defs>
+</svg>
+</section>
+<!-- Bottom Section (40%) -->
+<section class="h-[409px] bg-surface-container-low p-8 lg:p-12 overflow-y-auto no-scrollbar">
+<div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-12">
+<!-- Notes / Entry Area -->
+<div class="flex-1">
+<div class="flex items-center justify-between mb-6">
+<h2 class="noto-serif text-2xl text-emerald-900">Reflections</h2>
+<span class="manrope text-[10px] text-emerald-700 uppercase tracking-widest font-bold">Inscribed at Dawn</span>
+</div>
+<div class="space-y-6">
+<div class="border-b border-outline-variant/30 pb-2 flex items-center gap-4">
+<span class="text-xs text-stone-400 manrope">01.</span>
+<input class="bg-transparent border-none focus:ring-0 w-full placeholder:text-stone-300 text-on-surface manrope" placeholder="Start typing your intentions..." type="text"/>
+</div>
+<div class="border-b border-outline-variant/30 pb-2 flex items-center gap-4">
+<span class="text-xs text-stone-400 manrope">02.</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-on-surface manrope" type="text" value="The garden is starting to breathe again."/>
+</div>
+<div class="border-b border-outline-variant/30 pb-2 flex items-center gap-4">
+<span class="text-xs text-stone-400 manrope">03.</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-on-surface manrope" type="text"/>
+</div>
+<div class="border-b border-outline-variant/30 pb-2 flex items-center gap-4">
+<span class="text-xs text-stone-400 manrope">04.</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-on-surface manrope" type="text"/>
+</div>
+</div>
+</div>
+<!-- Secondary Context Area (40% of the 40%) -->
+<div class="w-full md:w-64 flex flex-col gap-8">
+<!-- Seasonal Progress Indicator -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="manrope text-[10px] uppercase tracking-wider text-stone-500">Season Progress</span>
+<span class="manrope text-[10px] font-bold text-emerald-700">42%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[42%] rounded-full"></div>
+</div>
+<p class="mt-2 text-xs text-stone-400 manrope italic">28 days until mid-spring bloom.</p>
+</div>
+<!-- Ambient Context Card -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-amber-500" data-icon="wb_sunny">wb_sunny</span>
+<span class="manrope font-bold text-sm">64°F Clear Sky</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-xs manrope">
+<span class="text-stone-500">Sunrise</span>
+<span class="text-emerald-900 font-medium">6:12 AM</span>
+</div>
+<div class="flex items-center justify-between text-xs manrope">
+<span class="text-stone-500">Sunset</span>
+<span class="text-emerald-900 font-medium">6:48 PM</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-end px-8 pb-6 pt-2 bg-white/40 dark:bg-black/40 backdrop-blur-md rounded-t-[2.5rem]">
+<div class="flex flex-col items-center justify-center bg-gradient-to-br from-emerald-700 to-emerald-500 text-white rounded-full p-3 mb-2 scale-110 shadow-lg">
+<span class="material-symbols-outlined" data-icon="center_focus_weak">center_focus_weak</span>
+<span class="manrope text-[10px] uppercase tracking-tighter mt-1">Focus</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 p-2">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="manrope text-[10px] uppercase tracking-tighter">Journey</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 p-2">
+<span class="material-symbols-outlined" data-icon="air">air</span>
+<span class="manrope text-[10px] uppercase tracking-tighter">Breathe</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 p-2">
+<span class="material-symbols-outlined" data-icon="border_all">border_all</span>
+<span class="manrope text-[10px] uppercase tracking-tighter">Space</span>
+</div>
+</nav>
+<!-- Contextual FAB (Hidden on Mobile Nav) -->
+<button class="fixed bottom-32 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform duration-300 lg:hidden">
+<span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>

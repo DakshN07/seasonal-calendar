@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #a1d39b;
+  --color-background: #111413;
+  --color-surface-container: #1c1e1c;
+  --color-tertiary-fixed: #ffd9dd;
+  --color-on-background: #e1e3e1;
+  --color-surface-container-low: #191c1b;
+  --color-surface-container-lowest: #0b0e0d;
+  --color-surface-variant: #424841;
+  --color-outline-variant: #424841;
+  --color-primary-container: #245025;
+  --color-on-primary-container: #bcf0b6;
+  --color-primary-fixed: #bcf0b6;
+  --color-on-surface: #e1e3e1;
+  
+  --font-headline: "Noto Serif", serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Manrope", sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  font-family: var(--font-body);
+  overflow: hidden;
+}
+
+.mask-wave {
+  clip-path: url(#wave-clip);
+}
+
+.glass-panel {
+  background: rgba(25, 28, 27, 0.6);
+  backdrop-filter: blur(16px);
+  border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.noto-serif { font-family: var(--font-headline); }
+.manrope { font-family: var(--font-body); }
