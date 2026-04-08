@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, MotionValue } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import { SeasonalProvider, SeasonalWrapper, useSeasonalCalendar } from './useSeasonalCalendar';
@@ -92,7 +92,7 @@ const MonthGrid = ({ todayDate, selectedDateStr, onSelectDate, themeColors, allN
   const startOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1; 
   
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const gridCells = Array.from({ length: startOffset }, () => null).concat(
+  const gridCells = (Array.from({ length: startOffset }, () => null) as Array<number | null>).concat(
     Array.from({ length: daysInMonth }, (_, i) => i + 1)
   );
 
@@ -310,7 +310,6 @@ const SeasonalCalendarUI = () => {
   const [selectedDateStr, setSelectedDateStr] = useState<string>(todayStr);
 
   const formattedFullDate = todayDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-  const monthShort = todayDate.toLocaleDateString('en-US', { month: 'short' });
   const dayNum = todayDate.getDate();
   const quote = currentSeason ? SEASONAL_QUOTES[currentSeason.ritu] : SEASONAL_QUOTES['Vasant'];
 
