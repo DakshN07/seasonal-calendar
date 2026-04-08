@@ -80,13 +80,12 @@ const LiquidMeshBackground = ({ color, atmosphere, isGrishma, motionX, motionY }
   );
 };
 
-const MonthGrid = ({ todayDate, startDateStr, endDateStr, onSelectDate, themeColors, allNotes }: any) => {
-  const year = todayDate.getFullYear();
-  const month = todayDate.getMonth();
+const MonthGrid = ({ viewDate, todayStr, startDateStr, endDateStr, onSelectDate, themeColors, allNotes, onPrevMonth, onNextMonth }: any) => {
+  const year = viewDate.getFullYear();
+  const month = viewDate.getMonth();
   
   // Format local date securely avoiding timezone shifts
   const pad = (n: number) => String(n).padStart(2, '0');
-  const todayStr = `${year}-${pad(month+1)}-${pad(todayDate.getDate())}`;
   
   const firstDayOfMonth = new Date(year, month, 1).getDay(); 
   const startOffset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1; 
@@ -102,7 +101,15 @@ const MonthGrid = ({ todayDate, startDateStr, endDateStr, onSelectDate, themeCol
       style={{ boxShadow: '0 20px 80px var(--primary-seasonal-alpha)', ...({ '--tw-backdrop-blur': 'blur(40px)' } as any) }}
     >
       <div className="flex justify-between items-center mb-6 px-2">
-        <h3 className="noto-serif text-2xl tracking-wide text-stone-200">{todayDate.toLocaleDateString('en-US', { month: 'long' })}</h3>
+        <div className="flex items-center gap-3">
+          <button onClick={onPrevMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 text-stone-400 hover:text-white transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <h3 className="noto-serif text-2xl tracking-wide text-stone-200">{viewDate.toLocaleDateString('en-US', { month: 'long' })}</h3>
+          <button onClick={onNextMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 text-stone-400 hover:text-white transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
         <span className="manrope font-bold text-stone-500">{year}</span>
       </div>
       <div className="grid grid-cols-7 text-center gap-y-4 gap-x-2 text-sm manrope">
@@ -337,6 +344,16 @@ const SeasonalCalendarUI = () => {
   // State to hold the actively selected date(s) for the Left Pane
   const [startDateStr, setStartDateStr] = useState<string | null>(todayStr);
   const [endDateStr, setEndDateStr] = useState<string | null>(null);
+  
+  const [viewDate, setViewDate] = useState<Date>(todayDate);
+
+  const handlePrevMonth = () => {
+    setViewDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setViewDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+  };
 
   const handleSelectDate = (dateStr: string) => {
     if (!startDateStr || (startDateStr && endDateStr)) {
@@ -467,12 +484,15 @@ const SeasonalCalendarUI = () => {
           {/* Right Pane: Master Calendar View */}
           <div className="order-1 lg:order-2">
              <MonthGrid 
-               todayDate={todayDate}
+               viewDate={viewDate}
+               todayStr={todayStr}
                startDateStr={startDateStr}
                endDateStr={endDateStr}
                onSelectDate={handleSelectDate}
                themeColors={themeColors}
                allNotes={allNotes}
+               onPrevMonth={handlePrevMonth}
+               onNextMonth={handleNextMonth}
              />
           </div>
 
